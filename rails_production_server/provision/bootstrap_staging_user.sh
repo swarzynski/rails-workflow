@@ -12,3 +12,5 @@ SECRET=`ruby -e "require 'securerandom'; print SecureRandom.hex(64);"`
 echo "export SECRET_KEY_BASE=$SECRET" >> ~/.profile
 
 cat ~/.ssh/id_rsa.pub | sudo -H -u deploy tee --append /home/deploy/.ssh/authorized_keys > /dev/null
+
+chmod a+x ~/import_db.sh
