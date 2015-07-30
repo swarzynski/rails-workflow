@@ -61,11 +61,14 @@ NEWUSER=staging
 
 ip=`VBoxManage guestproperty get "${NAME_OF_BOX}" "/VirtualBox/GuestInfo/Net/0/V4/IP" | awk '{ print $2 }'`
 
-ssh vagrant@$ip "sudo adduser --disabled-password --gecos '' $NEWUSER"
-ssh vagrant@$ip "sudo adduser ${NEWUSER} ${NEWUSER}"
-ssh vagrant@$ip "sudo bash -c 'echo \"${NEWUSER} ALL=(ALL) NOPASSWD:ALL\" > /etc/sudoers.d/${NEWUSER}'"
-ssh vagrant@$ip "sudo -H -u $NEWUSER bash -c 'ssh-keygen -t rsa -N \"\" -f ~/.ssh/id_rsa'"
-ssh vagrant@$ip "sudo -H -u $NEWUSER bash -c 'touch ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys'"
+ssh vagrant@$ip /bin/bash << EOF
+sudo adduser --disabled-password --gecos '' $NEWUSER
+sudo adduser ${NEWUSER} ${NEWUSER}
+sudo bash -c 'echo \"${NEWUSER} ALL=(ALL) NOPASSWD:ALL\" > /etc/sudoers.d/${NEWUSER}'
+sudo -H -u $NEWUSER bash -c 'ssh-keygen -t rsa -N \"\" -f ~/.ssh/id_rsa'
+sudo -H -u $NEWUSER bash -c 'touch ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys'
+EOF
+
 cat ~/.ssh/id_rsa.pub | ssh vagrant@$ip "sudo -H -u $NEWUSER bash -c 'cat >> ~/.ssh/authorized_keys'"
 
 scp provision/import_db.sh ${NEWUSER}@${ip}:~
