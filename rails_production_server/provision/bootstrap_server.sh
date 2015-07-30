@@ -1,3 +1,5 @@
+echo "Europe/Warsaw" | sudo tee /etc/timezone
+sudo dpkg-reconfigure --frontend noninteractive tzdata
 sudo aptitude update
 sudo aptitude -y upgrade
 sudo aptitude -y install unattended-upgrades mc
@@ -11,10 +13,10 @@ sudo apt-add-repository -y ppa:brightbox/ruby-ng
 sudo aptitude update
 sudo aptitude -y upgrade
 
-sudo aptitude install -y ruby2.2 ruby2.2-dev
+sudo aptitude install -y ruby2.0 ruby2.0-dev
 sudo aptitude install -y ruby-switch
 
-sudo ruby-switch --set ruby2.2
+sudo ruby-switch --set ruby2.0
 
 #Postgres
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
@@ -50,26 +52,3 @@ sudo aptitude -y install zlib1g-dev libpq-dev
 
 sudo gem install bundler
 
-###################################################################################
-sudo service nginx stop
-sudo cp nginx.conf /etc/nginx/nginx.conf
-sudo cp default /etc/nginx/sites-available/default
-sudo service nginx start
-
-## postgres 
-
-USER=`whoami`
-PASS=`tr -cd '[:alnum:]' < /dev/urandom | fold -w30 | head -n1`
-
-sudo -u postgres psql -c "CREATE USER $USER WITH ENCRYPTED PASSWORD '$PASS' CREATEDB NOCREATEROLE NOCREATEUSER;"
-
-echo "export DATABASE_USER_PASSWORD=$PASS" >> ~/.bashrc
-echo "export RAILS_ENV=production" >> ~/.bashrc
-
-#odkomentowanie capistrano w Gem
-#cap install w projekcie
-
-#libssl-dev libreadline-dev libyaml-dev libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
-#curl #już jest
-
-#deploy: deploy123

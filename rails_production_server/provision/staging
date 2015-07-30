@@ -14,8 +14,8 @@
 # Default server configuration
 #
 server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
+	listen 8080 default_server;
+	listen [::]:8080 default_server;
 
 	# SSL configuration
 	#
@@ -33,8 +33,8 @@ server {
 	server_name _;
 
 	passenger_enabled on;
-  rails_env    production;
-  root         /home/deploy/webapps/myapp1/current/public;
+  rails_env    staging;
+  root         /home/staging/webapps/myapp1/current/public;
   passenger_friendly_error_pages on;
 
 	#location / {

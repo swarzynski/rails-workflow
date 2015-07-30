@@ -1,4 +1,7 @@
-ubuntubox/
+ubuntubox/*
+rails_dev_server/.vagrant/
+rails_dev_server/webapps/*
+testy/
 
 # Log Files
 *.log
