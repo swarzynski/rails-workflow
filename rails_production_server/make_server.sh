@@ -61,7 +61,7 @@ NEWUSER=staging
 
 ip=`VBoxManage guestproperty get "${NAME_OF_BOX}" "/VirtualBox/GuestInfo/Net/0/V4/IP" | awk '{ print $2 }'`
 
-ssh vagrant@$ip /bin/bash << EOF
+ssh vagrant@$ip /bin/bash <<-EOF
 sudo adduser --disabled-password --gecos '' $NEWUSER
 sudo adduser ${NEWUSER} ${NEWUSER}
 sudo bash -c 'echo \"${NEWUSER} ALL=(ALL) NOPASSWD:ALL\" > /etc/sudoers.d/${NEWUSER}'
