@@ -37,9 +37,12 @@ if [ $count -ne 0 ]
 then
 	echo "Maszyna wirtualna serwera już istnieje"
 else
+	#http://nakkaya.com/2012/08/30/create-manage-virtualBox-vms-from-the-command-line/
 	echo "Tworzę maszynę wirtualną serwera"
 	vboxmanage import ../ubuntubox/box.ovf --vsys 0 --vmname "${NAME_OF_BOX}";
 	vboxmanage modifyvm "${NAME_OF_BOX}" --nic1 bridged --bridgeadapter1 wlan0
+	vboxmanage modifyvm "${NAME_OF_BOX}" --memory 1024
+	vboxmanage modifyvm "${NAME_OF_BOX}" --cpus 2
 	#vboxmanage modifyvm "${NAME_OF_BOX}" --macaddress1 08002723A640
 fi
 ;;
@@ -55,6 +58,11 @@ echo "Europe/Warsaw" | sudo tee /etc/timezone
 sudo dpkg-reconfigure --frontend noninteractive tzdata
 sudo aptitude update
 sudo aptitude -y upgrade
+sudo aptitude -y install build-essential
+
+# potrzebne dla kompilacji ruby
+sudo aptitude -y install libffi-dev libreadline-dev
+
 sudo aptitude -y install unattended-upgrades mc
 
 #tylko gdy nie działa apt-add-repository - wersja Ubuntu Server ponoć

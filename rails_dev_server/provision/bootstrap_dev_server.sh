@@ -1,5 +1,10 @@
 sudo aptitude update
 sudo aptitude -y upgrade
+sudo aptitude -y install build-essential
+
+# potrzebne dla kompilacji ruby
+sudo aptitude -y install libffi-dev libreadline-dev
+
 sudo aptitude -y install unattended-upgrades mc
 
 sudo apt-add-repository -y ppa:brightbox/ruby-ng
@@ -22,7 +27,6 @@ sudo aptitude update
 sudo aptitude -y upgrade
 sudo aptitude -y install postgresql-9.4 postgresql-9.4-postgis-2.1 postgresql-contrib
 
-sudo aptitude -y install build-essential
 sudo aptitude -y install libsqlite3-dev sqlite3
 
 #wymagane przez rails
