@@ -32,6 +32,11 @@ sudo aptitude -y install libsqlite3-dev sqlite3
 #wymagane przez rails
 sudo aptitude -y install zlib1g-dev libpq-dev
 
+PASS=`tr -cd '[:alnum:]' < /dev/urandom | fold -w30 | head -n1`
+sudo -u postgres psql -c "CREATE USER vagrant WITH ENCRYPTED PASSWORD '$PASS' CREATEDB NOCREATEROLE NOCREATEUSER;"
+echo "export DATABASE_USER_PASSWORD=$PASS" >> ~/.profile
+
+
 #odkomentowanie capistrano w Gem
 #cap install w projekcie
 
@@ -39,5 +44,7 @@ sudo aptitude -y install zlib1g-dev libpq-dev
 #curl #już jest
 
 sudo gem install rails
+
+echo "alias be='bundle exec'" >> ~/.bashrc
 
 sudo reboot
