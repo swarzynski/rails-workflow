@@ -17,7 +17,7 @@ Notatka:
 Wymagania:
 * Ubuntu
 * vagrant
-* Twój komputer powinien mieć adres IP przydzielany przez DHCP (wirtualka produkcyjnego dostaje osobne IP)
+* Twój komputer powinien mieć adres IP przydzielany przez DHCP (wirtualka produkcyjnego dostaje osobne IP), po Twoim interfejsie wlan0 (interfejs można zmienić na inny w pliku server.sh)
 * masz skonfigurowane klucze SSH (używa ssh-copy-id by wpuszczać Cię na serwery bez pytania o hasło)
 
 Użycie:
