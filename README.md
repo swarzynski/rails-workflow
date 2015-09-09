@@ -18,6 +18,7 @@ Wymagania:
 * Ubuntu
 * vagrant
 * Twój komputer powinien mieć adres IP przydzielany przez DHCP (wirtualka produkcyjnego dostaje osobne IP)
+* masz skonfigurowane klucze SSH (używa ssh-copy-id by wpuszczać Cię na serwery bez pytania o hasło)
 
 Użycie:
 rails_dev_server:
