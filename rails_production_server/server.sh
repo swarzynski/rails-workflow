@@ -1,6 +1,7 @@
 #!/bin/bash
 
 NAME_OF_BOX=rails-production-server2
+NET_INTERFACE=wlan0
 IP=""
 DEFAULT_NAME_OF_HOST=vagrant-ubuntu-trusty-64
 
@@ -26,8 +27,8 @@ echo $IP
 ################################################################################################
 createvm)
 echo "Make server"
-if [ ! -f ../ubuntubox/ubuntu_server.ova ]; then
-    wget -P ../ubuntubox/ https://vagrantcloud.com/ubuntu/boxes/trusty64/versions/20150609.0.10/providers/virtualbox.box
+if [ ! -f ../ubuntubox/virtualbox.box ]; then
+    wget -P ../ubuntubox/ https://atlas.hashicorp.com/ubuntu/boxes/trusty64/versions/20151117.0.0/providers/virtualbox.box
     tar xvf ../ubuntubox/virtualbox.box -C ../ubuntubox/
     rm ../ubuntubox/virtualbox.box
 fi
@@ -40,8 +41,8 @@ then
 else
 	#http://nakkaya.com/2012/08/30/create-manage-virtualBox-vms-from-the-command-line/
 	echo "Tworzę maszynę wirtualną serwera"
-	vboxmanage import ../ubuntubox/ubuntu_server.ova --vsys 0 --vmname "${NAME_OF_BOX}";
-	vboxmanage modifyvm "${NAME_OF_BOX}" --nic1 bridged --bridgeadapter1 wlan0
+	vboxmanage import ../ubuntubox/box.ovf --vsys 0 --vmname "${NAME_OF_BOX}";
+	vboxmanage modifyvm "${NAME_OF_BOX}" --nic1 bridged --bridgeadapter1 ${NET_INTERFACE}
 	vboxmanage modifyvm "${NAME_OF_BOX}" --memory 1024
 	vboxmanage modifyvm "${NAME_OF_BOX}" --cpus 2
 	#vboxmanage modifyvm "${NAME_OF_BOX}" --macaddress1 08002723A640
