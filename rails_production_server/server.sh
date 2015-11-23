@@ -2,6 +2,7 @@
 
 NAME_OF_BOX=rails-production-server2
 IP=""
+DEFAULT_NAME_OF_HOST=vagrant-ubuntu-trusty-64
 
 getip () {
 	IP=`VBoxManage guestproperty get "${NAME_OF_BOX}" "/VirtualBox/GuestInfo/Net/0/V4/IP" | awk '{ print $2 }'`
@@ -25,7 +26,7 @@ echo $IP
 ################################################################################################
 createvm)
 echo "Make server"
-if [ ! -f ../ubuntubox/box.ovf ]; then
+if [ ! -f ../ubuntubox/ubuntu_server.ova ]; then
     wget -P ../ubuntubox/ https://vagrantcloud.com/ubuntu/boxes/trusty64/versions/20150609.0.10/providers/virtualbox.box
     tar xvf ../ubuntubox/virtualbox.box -C ../ubuntubox/
     rm ../ubuntubox/virtualbox.box
@@ -39,7 +40,7 @@ then
 else
 	#http://nakkaya.com/2012/08/30/create-manage-virtualBox-vms-from-the-command-line/
 	echo "Tworzę maszynę wirtualną serwera"
-	vboxmanage import ../ubuntubox/box.ovf --vsys 0 --vmname "${NAME_OF_BOX}";
+	vboxmanage import ../ubuntubox/ubuntu_server.ova --vsys 0 --vmname "${NAME_OF_BOX}";
 	vboxmanage modifyvm "${NAME_OF_BOX}" --nic1 bridged --bridgeadapter1 wlan0
 	vboxmanage modifyvm "${NAME_OF_BOX}" --memory 1024
 	vboxmanage modifyvm "${NAME_OF_BOX}" --cpus 2
@@ -113,8 +114,8 @@ sudo aptitude -y install zlib1g-dev libpq-dev
 sudo gem install bundler
 EOF
 
-ssh vagrant@$IP "sudo sed -i -e 's/vagrant-ubuntu-trusty-64/${NAME_OF_BOX}/g' /etc/hostname"
-ssh vagrant@$IP "sudo poweroff"
+ssh -t vagrant@$IP "sudo sed -i -e 's/${NAME_OF_HOST}/${NAME_OF_BOX}/g' /etc/hostname"
+ssh -t vagrant@$IP "sudo poweroff"
 echo "Server poweroff"
 ;;
 ################################################################################################
@@ -193,7 +194,7 @@ cat ~/.ssh/id_rsa.pub | sudo -H -u deploy tee --append /home/deploy/.ssh/authori
 
 chmod a+x ~/import_db.sh
 EOF
-ssh vagrant@$IP "sudo poweroff"
+ssh -t vagrant@$IP "sudo poweroff"
 ;;
 ################################################################################################
 test1)
