@@ -1,3 +1,4 @@
+export DEBIAN_FRONTEND=noninteractive
 sudo aptitude update
 sudo aptitude -y upgrade
 sudo aptitude -y install build-essential
@@ -43,7 +44,7 @@ echo "export DATABASE_USER_PASSWORD=$PASS" >> ~/.profile
 #libssl-dev libreadline-dev libyaml-dev libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
 #curl #już jest
 
-sudo gem install rails
+sudo gem install bundler
 
 echo "alias be='bundle exec'" >> ~/.bashrc
 

@@ -42,6 +42,7 @@ else
 	#http://nakkaya.com/2012/08/30/create-manage-virtualBox-vms-from-the-command-line/
 	echo "Tworzę maszynę wirtualną serwera"
 	vboxmanage import ../ubuntubox/box.ovf --vsys 0 --vmname "${NAME_OF_BOX}";
+	#future use: for Host-only networking http://makahiki.readthedocs.org/en/latest/installation-makahiki-vagrant-configuration-vagrant.html
 	vboxmanage modifyvm "${NAME_OF_BOX}" --nic1 bridged --bridgeadapter1 ${NET_INTERFACE}
 	vboxmanage modifyvm "${NAME_OF_BOX}" --memory 1024
 	vboxmanage modifyvm "${NAME_OF_BOX}" --cpus 2
