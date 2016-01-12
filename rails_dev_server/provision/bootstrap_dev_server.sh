@@ -37,7 +37,7 @@ PASS=`tr -cd '[:alnum:]' < /dev/urandom | fold -w30 | head -n1`
 sudo -u postgres psql -c "CREATE USER vagrant WITH ENCRYPTED PASSWORD '$PASS' CREATEDB NOCREATEROLE NOCREATEUSER;"
 echo "export DATABASE_USER_PASSWORD=$PASS" >> ~/.profile
 
-
+sudo -u postgres psql -c "ALTER ROLE vagrant WITH SUPERUSER;"
 #odkomentowanie capistrano w Gem
 #cap install w projekcie
 
