@@ -38,6 +38,11 @@ sudo -u postgres psql -c "CREATE USER vagrant WITH ENCRYPTED PASSWORD '$PASS' CR
 echo "export DATABASE_USER_PASSWORD=$PASS" >> ~/.profile
 
 sudo -u postgres psql -c "ALTER ROLE vagrant WITH SUPERUSER;"
+
+# Change configuration of PostgreSQL to get access to the database from host machine
+sudo sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/" /etc/postgresql/9.4/main/postgresql.conf
+echo "host all all all md5" | sudo tee --append /etc/postgresql/9.4/main/pg_hba.conf > /dev/null
+
 #odkomentowanie capistrano w Gem
 #cap install w projekcie
 
