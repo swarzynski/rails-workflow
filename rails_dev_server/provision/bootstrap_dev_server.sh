@@ -13,10 +13,10 @@ sudo apt-add-repository -y ppa:brightbox/ruby-ng
 sudo aptitude update
 sudo aptitude -y upgrade
 
-sudo aptitude install -y ruby2.2 ruby2.2-dev
+sudo aptitude install -y ruby2.3 ruby2.3-dev
 sudo aptitude install -y ruby-switch
 
-sudo ruby-switch --set ruby2.2
+sudo ruby-switch --set ruby2.3
 
 echo "gem: --no-document" > ~/.gemrc
 
