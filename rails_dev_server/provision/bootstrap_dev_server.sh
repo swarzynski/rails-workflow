@@ -49,8 +49,28 @@ echo "host all all all md5" | sudo tee --append /etc/postgresql/9.4/main/pg_hba.
 #libssl-dev libreadline-dev libyaml-dev libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
 #curl #już jest
 
-sudo gem install bundler
+sudo gem install bundler mailcatcher
+
+# Make Mailcatcher a service (autostart)
+# and get commands:
+# sudo service mailcatcher status
+# sudo service mailcatcher start
+# sudo service mailcatcher restart
+# sudo service mailcatcher stop
+
+sudo tee /etc/init/mailcatcher.conf <<- EOF
+	description "Mailcatcher"
+
+	start on runlevel [2345]
+	stop on runlevel [!2345]
+
+	respawn
+
+	exec /usr/bin/env $(which mailcatcher) --foreground --http-ip=0.0.0.0
+EOF
+
 
 echo "alias be='bundle exec'" >> ~/.bashrc
+echo "alias cdrails='cd /vagrant/webapps/'" >> ~/.bashrc
 
 sudo halt
