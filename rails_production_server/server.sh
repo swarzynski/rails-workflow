@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NAME_OF_BOX=rails-production-server2
+NAME_OF_BOX=dokku-host
 NET_INTERFACE=wlan0
 IP=""
 DEFAULT_NAME_OF_HOST=vagrant-ubuntu-trusty-64
@@ -28,7 +28,7 @@ echo $IP
 createvm)
 echo "Make server"
 if [ ! -f ../ubuntubox/virtualbox.box ]; then
-    wget -P ../ubuntubox/ https://atlas.hashicorp.com/ubuntu/boxes/trusty64/versions/20151117.0.0/providers/virtualbox.box
+    wget -P ../ubuntubox/ https://atlas.hashicorp.com/ubuntu/boxes/trusty64/versions/20160913.0.0/providers/virtualbox.box
     tar xvf ../ubuntubox/virtualbox.box -C ../ubuntubox/
     rm ../ubuntubox/virtualbox.box
 fi
@@ -158,7 +158,7 @@ mkdir dbbackup
 chmod a+x ~/backup_db.sh
 echo "1  0   * * *   deploy    /home/deploy/dbbackup.sh" | sudo tee --append /etc/crontab > /dev/null
 
-## postgres 
+## postgres
 
 sudo -u postgres psql -c "CREATE USER $NEWUSER WITH ENCRYPTED PASSWORD '$PASS' CREATEDB NOCREATEROLE NOCREATEUSER;"
 
